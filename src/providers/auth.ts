@@ -1,9 +1,8 @@
 import { AuthBindings } from "@refinedev/core"
 
 import { API_URL, dataProvider } from "./data"
-
 export const authCredentials = {
-  email: "shyamswaran@gmail.com ",
+  email: "michael.scott@dundermifflin.com",
   password: "demodemo",
 }
 
@@ -16,15 +15,14 @@ export const authProvider: AuthBindings = {
         headers: {},
         meta: {
           variables: { email },
+
           rawQuery: `
-                mutation Login($email: String!) {
-                    login(loginInput: {
-                      email: $email
-                    }) {
-                      accessToken,
-                    }
-                  }
-                `,
+            mutation Login($email: String!) {
+              login(loginInput: { email: $email }) {
+                accessToken
+              }
+            }
+          `,
         },
       })
 
@@ -46,6 +44,7 @@ export const authProvider: AuthBindings = {
       }
     }
   },
+
   logout: async () => {
     localStorage.removeItem("access_token")
 
@@ -54,6 +53,7 @@ export const authProvider: AuthBindings = {
       redirectTo: "/login",
     }
   },
+
   onError: async (error) => {
     if (error.statusCode === "UNAUTHENTICATED") {
       return {
@@ -64,6 +64,7 @@ export const authProvider: AuthBindings = {
 
     return { error }
   },
+
   check: async () => {
     try {
       await dataProvider.custom({
@@ -72,12 +73,12 @@ export const authProvider: AuthBindings = {
         headers: {},
         meta: {
           rawQuery: `
-                    query Me {
-                        me {
-                          name
-                        }
-                      }
-                `,
+            query Me {
+              me {
+                name
+              }
+            }
+          `,
         },
       })
 
@@ -92,6 +93,7 @@ export const authProvider: AuthBindings = {
       }
     }
   },
+
   getIdentity: async () => {
     const accessToken = localStorage.getItem("access_token")
 
@@ -106,18 +108,18 @@ export const authProvider: AuthBindings = {
           : {},
         meta: {
           rawQuery: `
-                    query Me {
-                        me {
-                            id,
-                            name,
-                            email,
-                            phone,
-                            jobTitle,
-                            timezone
-                            avatarUrl
-                        }
-                      }
-                `,
+            query Me {
+              me {
+                id
+                name
+                email
+                phone
+                jobTitle
+                timezone
+                avatarUrl
+              }
+            }
+          `,
         },
       })
 

@@ -8,7 +8,6 @@ import Header from "./header"
 export const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
-      {/* <GitHubBanner /> */}
       <ThemedLayoutV2
         Header={Header}
         Title={(titleProps) => {
